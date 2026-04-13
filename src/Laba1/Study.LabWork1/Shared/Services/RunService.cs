@@ -1,3 +1,4 @@
+using Study.LabWork1.Features.Task2;
 using Study.LabWork1.Shared.Abstractions;
 
 namespace Study.LabWork1.Shared.Services;
@@ -15,7 +16,16 @@ public class RunService : IRunService
     /// <summary>
     /// Задание 2
     /// </summary>
-    public void RunTask2() => throw new NotImplementedException();
+    public void RunTask2()
+    { 
+        var facade = new PurchaseFacade();
+        var steps = facade.ProcessOrder();
+
+        foreach (var step in steps)
+        {
+            Console.WriteLine(step);
+        }
+    }
 
     /// <summary>
     /// Задание 3
