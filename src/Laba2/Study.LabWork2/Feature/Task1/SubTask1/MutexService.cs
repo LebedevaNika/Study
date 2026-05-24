@@ -10,11 +10,11 @@ namespace Study.LabWork2.Feature.Task1.SubTask1;
 /// </summary>
 public sealed class MutexService : IPrimeCounter
 {
-    private static readonly Mutex _mutex = new Mutex();
-    private int _totalPrimeCount = 0;
+    private static readonly Mutex mutex = new Mutex();
+    private int totalPrimeCount = 0;
     public PrimeCountResultDto CountPrimes(int start, int end, int threadCount)
     {
-        _totalPrimeCount = 0;
+        totalPrimeCount = 0;
         var stopwatch = Stopwatch.StartNew();
         var threads = new List<Thread>();
 
@@ -42,7 +42,7 @@ public sealed class MutexService : IPrimeCounter
 
         return new PrimeCountResultDto
         {
-            PrimeCount = _totalPrimeCount,
+            PrimeCount = totalPrimeCount,
             ExecutionTime = stopwatch.Elapsed,
             SynchronizationType = GetVersionName(),
             ThreadCount = threadCount,
@@ -58,14 +58,14 @@ public sealed class MutexService : IPrimeCounter
         {
             bool isPrime = IsPrime(number);
 
-            _mutex.WaitOne();
+            mutex.WaitOne();
             try
             {
                 Console.WriteLine($"[Поток {threadId}] Проверяю число: {number}, простое: {isPrime}");
             }
             finally
             {
-                _mutex.ReleaseMutex();
+                mutex.ReleaseMutex();
             }
 
             if (isPrime)
@@ -74,15 +74,15 @@ public sealed class MutexService : IPrimeCounter
             }
         }
 
-        _mutex.WaitOne();
+        mutex.WaitOne();
         try
         {
-            _totalPrimeCount += localCount;
+            totalPrimeCount += localCount;
             Console.WriteLine($"[Поток {threadId}] Завершил. Найдено простых: {localCount}");
         }
         finally
         {
-            _mutex.ReleaseMutex();
+            mutex.ReleaseMutex();
         }
     }
 

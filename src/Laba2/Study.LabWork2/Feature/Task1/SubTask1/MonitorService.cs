@@ -9,11 +9,11 @@ namespace Study.LabWork2.Feature.Task1.SubTask1;
 /// </summary>
 public sealed class MonitorService : IPrimeCounter
 {
-    private static readonly object _lockObject = new object();
-    private int _totalPrimeCount = 0;
+    private static readonly object lockObject = new object();
+    private int totalPrimeCount = 0;
     public PrimeCountResultDto CountPrimes(int start, int end, int threadCount)
     {
-        _totalPrimeCount = 0;
+        totalPrimeCount = 0;
         var stopwatch = Stopwatch.StartNew();
         var threads = new List<Thread>();
 
@@ -36,7 +36,7 @@ public sealed class MonitorService : IPrimeCounter
         stopwatch.Stop();
         return new PrimeCountResultDto
         {
-            PrimeCount = _totalPrimeCount,           
+            PrimeCount = totalPrimeCount,           
             ExecutionTime = stopwatch.Elapsed,       
             SynchronizationType = GetVersionName(),  
             ThreadCount = threadCount,
@@ -51,14 +51,14 @@ public sealed class MonitorService : IPrimeCounter
         {
             bool isPrime = IsPrime(number);
 
-            Monitor.Enter(_lockObject);
+            Monitor.Enter(lockObject);
             try
             {
                 Console.WriteLine($"[Поток {threadId}] Проверяю число: {number}, простое: {isPrime}");
             }
             finally
             {
-                Monitor.Exit(_lockObject);
+                Monitor.Exit(lockObject);
             }
 
             if (isPrime)
@@ -67,15 +67,15 @@ public sealed class MonitorService : IPrimeCounter
             }
         }
 
-        Monitor.Enter(_lockObject);
+        Monitor.Enter(lockObject);
         try
         {
-            _totalPrimeCount += localCount;
+            totalPrimeCount += localCount;
             Console.WriteLine($"[Поток {threadId}] Завершил. Найдено простых: {localCount}");
         }
         finally
         {
-            Monitor.Exit(_lockObject);
+            Monitor.Exit(lockObject);
         }
     }
 

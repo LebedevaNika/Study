@@ -6,12 +6,12 @@ namespace Study.LabWork2.UnitTests.Feature.Task1.SubTask1;
 [TestFixture]
 public sealed class SemaphoreServiceTests
 {
-    private SemaphoreService _service;  // ← это поле, а не класс!
+    private SemaphoreService service;  // ← это поле, а не класс!
 
     [SetUp]
     public void Setup()
     {
-        _service = new SemaphoreService();
+        service = new SemaphoreService();
     }
 
     [Test]
@@ -21,7 +21,7 @@ public sealed class SemaphoreServiceTests
         int end = 100;
         int threadCount = 2;
 
-        var result = _service.CountPrimes(start, end, threadCount);
+        var result = service.CountPrimes(start, end, threadCount);
 
         Assert.That(result.PrimeCount, Is.EqualTo(25));
         Assert.That(result.ThreadCount, Is.EqualTo(threadCount));
@@ -31,13 +31,13 @@ public sealed class SemaphoreServiceTests
     [Test]
     public void Test2()
     {
-        var result = _service.CountPrimes(1, 10000, 4);
+        var result = service.CountPrimes(1, 10000, 4);
         Assert.That(result.PrimeCount, Is.EqualTo(1229));
     }
 
     [Test]
     public void Test3()
     {
-        Assert.That(_service.GetVersionName(), Is.EqualTo("Semaphore"));
+        Assert.That(service.GetVersionName(), Is.EqualTo("Semaphore"));
     }
 }

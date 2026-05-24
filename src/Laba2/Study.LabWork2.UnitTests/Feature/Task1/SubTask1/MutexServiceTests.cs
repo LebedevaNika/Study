@@ -6,31 +6,31 @@ namespace Study.LabWork2.UnitTests.Feature.Task1.SubTask1;
 [TestFixture]
 public sealed class MutexServiceTests
 {
-    private MutexService _service;
+    private MutexService service;
 
     [SetUp]
     public void Setup()
     {
-        _service = new MutexService();
+        service = new MutexService();
     }
 
     [Test]
     public void Test1()
     {
-        var result = _service.CountPrimes(1, 100, 2);
+        var result = service.CountPrimes(1, 100, 2);
         Assert.That(result.PrimeCount, Is.EqualTo(25));
     }
 
     [Test]
     public void Test2()
     {
-        var result = _service.CountPrimes(1, 10000, 4);
+        var result = service.CountPrimes(1, 10000, 4);
         Assert.That(result.PrimeCount, Is.EqualTo(1229));
     }
 
     [Test]
     public void Test3()
     {
-        Assert.That(_service.GetVersionName(), Is.EqualTo("Mutex"));
+        Assert.That(service.GetVersionName(), Is.EqualTo("Mutex"));
     }
 }
