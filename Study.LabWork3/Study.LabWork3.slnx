@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Study.LabWork3.Logic/Study.LabWork3.Logic.csproj" />
+  <Project Path="Study.LabWork3.Storage/Study.LabWork3.Storage.csproj" />
+  <Project Path="Лаб3/Study.LabWork3.WebAPI.csproj" />
+</Solution>
